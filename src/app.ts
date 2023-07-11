@@ -1,8 +1,13 @@
 import "reflect-metadata"
 import express from "express"
 import { DataSource, LessThan } from "typeorm";
-import { Company } from "./entities/Company";
-import { Product } from "./entities/Product";
+import { AppDataSource } from "./db/db.config";
+import { studentEntity } from "./entities/student.entity";
+import { courseEntity } from "./entities/course.entity";
+
+// Uncomment 'Company' and 'Product' imports for One-To-Many & Many-To-One relationship
+// import { Company } from "./entities/Company";
+// import { Product } from "./entities/Product";
 
 // Uncomment 'User' & 'Profile' imports for One-To-One relationship
 // import { User } from "./entities/User";
@@ -89,10 +94,11 @@ app.use('/', async function(req, res) {
         // }
     }
 
+    // Uncomment this to see One-To-Many relationship, Many-To-One relationship
     {   // One-To-Many relationship, Many-To-One relationship
         
         // Getting Respository of Company
-        const companyRepository = AppDataSource.getRepository(Company);
+        // const companyRepository = AppDataSource.getRepository(Company);
 
         // Inserting
 
@@ -165,8 +171,50 @@ app.use('/', async function(req, res) {
         // }
 
         // Deleting
-        await companyRepository.delete(1);
-        res.send("Company deleted");
+        // await companyRepository.delete(1);
+        // res.send("Company deleted");
+    }
+
+    {   // Many-To-Many Relationship
+        const studentRepository = AppDataSource.getRepository(studentEntity);
+
+        // Insert
+
+        // let course1 = new courseEntity();
+        // course1.name = "Angular";
+        // course1.description = "Angular is an open-source, front-end framework for building user interfaces";
+        // course1.courseCode = "ANG";
+
+        // let course2 = new courseEntity();
+        // course2.name = "React";
+        // course2.description = "React is a JavaScript library for building user interfaces";
+        // course2.courseCode = "REA";
+
+        // let course3 = new courseEntity();
+        // course3.name = "Vue";
+        // course3.description = "Vue is a progressive JavaScript framework for building user interfaces";
+        // course3.courseCode = "VUE";
+        
+        // let student : studentEntity = new studentEntity();
+        // student.name = "Mr.";
+        // student.age = 23;
+        // student.fatherName = "Daanyal";
+        // student.courses = [course1, course2, course3];
+
+        // let student2 : studentEntity = new studentEntity();
+        // student2.name = ".Umer";
+        // student2.age = 25;
+        // student2.fatherName = "Hayat";
+        // student2.courses = [];
+
+        // const studentInserted = await studentRepository.save(student2);
+        // res.json(studentInserted);
+
+        // Find
+
+        // let students = await studentRepository.find();  // without relation & lazy (For easy add {eager: true} in Student Entity > @ManyToMany())
+        let students = await studentRepository.find({relations:["courses"]});  // with relation
+        res.json(students);
     }
 
     // res.send('Hello From Express!');
@@ -174,21 +222,9 @@ app.use('/', async function(req, res) {
 
 const port = 3002;
 
-const AppDataSource = new DataSource({
-    type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "postgres",
-    database: "typeorm_db",
-    entities: ["src/entities/*{.ts,.js}"],   // database will look for 'entities' in the 'entities directory'; all the files having '.ts' or '.js' in the 'entities directory'
-    synchronize: true, // it will keep the follow up with all the changes made in files and then keep it sunc with the database
-    logging: true,  // now we'd be able to see all tthe logs coming from typorm
-});
-
 AppDataSource.initialize().then(() => {
     console.log("Datbase Connected Succesfully!");
     app.listen(port, () => {
-        console.log(`Example app listening on port ${port}!`);
+        console.log(`Server is up on ${port}!`);
     });
 }).catch((error) => console.log("errorMessage: Error Connecting Database", error));

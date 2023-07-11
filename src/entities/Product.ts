@@ -1,20 +1,22 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Company } from "./Company";
+// Uncomment this and 'Company' entity for One-To-Many & Many-To-One relationship
 
-@Entity()
-export class Product {
-    @PrimaryGeneratedColumn()
-        id: number;
+// import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+// import { Company } from "./Company";
 
-    @Column()
-        name: string;
+// @Entity()
+// export class Product {
+//     @PrimaryGeneratedColumn()
+//         id: number;
 
-    @Column()
-        price: number;
+//     @Column()
+//         name: string;
 
-    @Column()
-        description: string;
+//     @Column()
+//         price: number;
 
-    @ManyToOne(() => Company, (company) => company.products, { onDelete: "CASCADE"})
-        company: Company
-}
+//     @Column()
+//         description: string;
+
+//     @ManyToOne(() => Company, (company) => company.products, { onDelete: "CASCADE"})
+//         company: Company
+// }

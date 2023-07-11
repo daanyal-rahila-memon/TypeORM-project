@@ -1,17 +1,20 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Product } from "./Product";
 
-@Entity()
-export class Company {
-    @PrimaryGeneratedColumn()
-        id: number;
+// Uncomment this and 'Product' entity for One-To-Many & Many-To-One relationship
 
-    @Column()
-        name: string;
+// import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+// import { Product } from "./Product";
 
-    @Column()
-        description: string;
+// @Entity()
+// export class Company {
+//     @PrimaryGeneratedColumn()
+//         id: number;
 
-    @OneToMany(() => Product, (product) => product.company, { cascade: true })
-    products: Product[]
-}
+//     @Column()
+//         name: string;
+
+//     @Column()
+//         description: string;
+
+//     @OneToMany(() => Product, (product) => product.company, { cascade: true })
+//     products: Product[]
+// }
