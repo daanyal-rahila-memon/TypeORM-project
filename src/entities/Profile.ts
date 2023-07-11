@@ -1,13 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+// Uncomment this and 'User' entity for One-To-One relationship
 
-@Entity()
-export class Profile {
-    @PrimaryGeneratedColumn()
-    id: number;
+// import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-    @Column()
-    gender: string;
+// @Entity()
+// export class Profile {
+//     @PrimaryGeneratedColumn()
+//     id: number;
 
-    @Column()
-    photo: string;
-}
+//     @Column()
+//     gender: string;
+
+//     @Column()
+//     photo: string;
+// }
